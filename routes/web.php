@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Lesson;
+use App\Events\LessonWatched;
 use App\Http\Controllers\AchievementsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,11 @@ Route::get('/', function () {
 
 Route::get('/users/{user}/achievements', [AchievementsController::class, 'index']);
 
+// Dispatch 'LessonWatched' Event for test
+Route::get('/watchLesson', function (Request $request) {
+
+    LessonWatched::dispatch(Lesson::where('id', 2)->first(), Auth::user());
+});
 
 /* 
 *   User Authentication
